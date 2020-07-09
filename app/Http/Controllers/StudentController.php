@@ -15,7 +15,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Studentt::all();
+        $students = Student::all();
         return view('students.index', compact('students'));
     }
 
@@ -37,7 +37,11 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $new_student = new Student();
+        $new_student->fill($data);
+        $new_student->save();
+        return redirect()->route('students.index');
     }
 
     /**
@@ -46,7 +50,7 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Student $student)
     {
         return view('students.show', compact('student'));
     }
