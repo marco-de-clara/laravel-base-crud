@@ -63,7 +63,11 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $student = Student::find($id);
+        if($student) {
+            return view('students.edit', compact('student'));
+        }
+        return abort('404');
     }
 
     /**
@@ -75,7 +79,18 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'matriculation_number' => 'required|string|min:000001',
+            'email_address' => 'required|string|max:255'
+        ]);
+        $data = $request->all();
+        $student = Student::find($id);
+        if($student) {
+            $student->update($data);
+        }
+        return redirect()->route('students.index');
     }
 
     /**
@@ -86,6 +101,10 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::find($id);
+        if($student) {
+            $student->delete();
+        }
+        return redirect()->route('students.index');
     }
 }

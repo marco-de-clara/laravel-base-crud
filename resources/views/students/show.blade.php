@@ -14,6 +14,12 @@
                     <li>Matriculation Number: {{ $student->matriculation_number }}</li>
                     <li>Email Address: {{ $student->email_address }}</li>
                 </ul>
+
+                <form action="{{ route('students.destroy', ['student' => $student->id]) }}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                </form>
             </div>
         </div>
     </div>
